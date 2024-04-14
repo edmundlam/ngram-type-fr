@@ -307,6 +307,13 @@ var ngramTypeConfig = {
 
             // Remove spaces at starting of the phrase
             var typedPhrase = this.typedPhrase.trimStart();
+            var substitutions = [
+                ["’", "'"],
+                ["œ", "oe"],
+            ];
+            for (var subst of substitutions) {
+                typedPhrase = typedPhrase.replaceAll(subst[0], subst[1]);
+            }
             if (!typedPhrase.length) {
                 return;
             }
