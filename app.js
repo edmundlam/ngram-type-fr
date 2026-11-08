@@ -448,6 +448,7 @@ var ngramTypeConfig = {
 
             $customWordsModal.modal("hide");
             this.custom_words = customWordsProccessed;
+            $('#custom_words').prop('checked', true);
         },
     },
 };
