@@ -86,7 +86,7 @@
 <body>
     <div id="app" class="d-flex flex-column">
 
-        <h1 class="sr-only">French touch typing trainer — practice with French n-grams and words</h1>
+        <h1 class="sr-only">{{ t.h1 }}</h1>
 
         <!--Navbar (sound toggle and timer) start-->
         <nav class="navbar bg-dark justify-content-center">
@@ -105,7 +105,7 @@
                                 id="sound-correct-letter-toggler"
                                 v-model="data.soundCorrectLetterEnabled"
                             >
-                            <label class="custom-control-label" for="sound-correct-letter-toggler">Correct Letter</label>
+                            <label class="custom-control-label" for="sound-correct-letter-toggler">{{ t.soundCorrect }}</label>
                         </div>
                         <div class="custom-control custom-switch">
                             <input
@@ -114,7 +114,7 @@
                                 id="sound-incorrect-letter-toggler"
                                 v-model="data.soundIncorrectLetterEnabled"
                             >
-                            <label class="custom-control-label" for="sound-incorrect-letter-toggler">Incorrect Letter</label>
+                            <label class="custom-control-label" for="sound-incorrect-letter-toggler">{{ t.soundIncorrect }}</label>
                         </div>
                         <div class="custom-control custom-switch">
                             <input
@@ -123,7 +123,7 @@
                                 id="sound-passed-threshold-toggler"
                                 v-model="data.soundPassedThresholdEnabled"
                             >
-                            <label class="custom-control-label" for="sound-passed-threshold-toggler">Passed Threshold</label>
+                            <label class="custom-control-label" for="sound-passed-threshold-toggler">{{ t.soundPassed }}</label>
                         </div>
                         <div class="custom-control custom-switch">
                             <input
@@ -132,12 +132,16 @@
                                 id="sound-failed-threshold-toggler"
                                 v-model="data.soundFailedThresholdEnabled"
                             >
-                            <label class="custom-control-label" for="sound-failed-threshold-toggler">Failed Threshold</label>
+                            <label class="custom-control-label" for="sound-failed-threshold-toggler">{{ t.soundFailed }}</label>
                         </div>
                     </div>
 
-                    <a href="#" class="align-self-start" data-toggle="collapse" data-target="#sound-togglers">
-                        Sounds
+                    <a href="#" class="align-self-start pr-3" data-toggle="collapse" data-target="#sound-togglers">
+                        {{ t.sounds }}
+                    </a>
+
+                    <a href="#" class="align-self-start" v-on:click.prevent="toggleUiLang">
+                        {{ t.langToggle }}
                     </a>
                 </div>
             </div>
@@ -147,7 +151,7 @@
         <!--Lesson settings start-->
         <div class="row justify-content-center mx-0">
             <fieldset class="settings-module col-xl-2 col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                <legend>Source</legend>
+                <legend>{{ t.sourceLegend }}</legend>
                 <div class="form-group">
                     <label class="col-form-label col-form-label-sm"> &nbsp; </label>
                     <div class="custom-control custom-radio">
@@ -159,7 +163,7 @@
                             value="bigrams"
                             v-model="data.source"
                         >
-                        <label class="custom-control-label" for="bi-grams">Bigrams</label>
+                        <label class="custom-control-label" for="bi-grams">{{ t.bigrams }}</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input
@@ -170,7 +174,7 @@
                             value="trigrams"
                             v-model="data.source"
                         >
-                        <label class="custom-control-label" for="tri-grams">Trigrams</label>
+                        <label class="custom-control-label" for="tri-grams">{{ t.trigrams }}</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input
@@ -181,7 +185,7 @@
                             value="tetragrams"
                             v-model="data.source"
                         >
-                        <label class="custom-control-label" for="tetra-grams">Tetragrams</label>
+                        <label class="custom-control-label" for="tetra-grams">{{ t.tetragrams }}</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input
@@ -192,7 +196,7 @@
                             value="words"
                             v-model="data.source"
                         >
-                        <label class="custom-control-label" for="words">Words</label>
+                        <label class="custom-control-label" for="words">{{ t.words }}</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input
@@ -210,14 +214,14 @@
                             data-target="#custom-words-modal"
                             :click="customWordsModalShow"
                         >
-                            Custom
+                            {{ t.custom }}
                         </a>
                         </label>
                     </div>
                 </div>
             </fieldset>
             <fieldset class="settings-module col-xl-2 col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                <legend>Scope</legend>
+                <legend>{{ t.scopeLegend }}</legend>
                 <div class="form-group">
                     <label class="col-form-label col-form-label-sm"> &nbsp; </label>
                     <div class="custom-control custom-radio">
@@ -275,24 +279,28 @@
                 </div>
             </fieldset>
             <fieldset class="settings-module col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                <legend>Generator</legend>
+                <legend>{{ t.generatorLegend }}</legend>
                 <div class="form-group">
-                    <label class="col-form-label col-form-label-sm">Combination</label>
+                    <label class="col-form-label col-form-label-sm" :title="t.combinationTitle">{{ t.combination }}</label>
                     <input v-model.number="data[data['source']].combination" v-on:change="refreshPhrases"
+                        :title="t.combinationTitle"
                         class="form-control form-control-sm" type="number" min="1">
-                    <label class="col-form-label col-form-label-sm">Repetition</label>
+                    <label class="col-form-label col-form-label-sm" :title="t.repetitionTitle">{{ t.repetition }}</label>
                     <input v-model.number="data[data['source']].repetition" v-on:change="refreshPhrases"
+                        :title="t.repetitionTitle"
                         class="form-control form-control-sm" type="number" min="1">
                 </div>
             </fieldset>
             <fieldset class="settings-module col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                <legend>Threshold</legend>
+                <legend>{{ t.thresholdLegend }}</legend>
                 <div class="form-group">
-                    <label class="col-form-label col-form-label-sm">WPM</label>
+                    <label class="col-form-label col-form-label-sm" :title="t.wpmTitle">{{ t.wpm }}</label>
                     <input v-model.number="data[data['source']].minimumWPM" v-on:change="save"
+                        :title="t.wpmTitle"
                         class="form-control form-control-sm" type="number" min="1" max="500">
-                    <label class="col-form-label col-form-label-sm">Accuracy</label>
+                    <label class="col-form-label col-form-label-sm" :title="t.accuracyTitle">{{ t.accuracy }}</label>
                     <input v-model.number="data[data['source']].minimumAccuracy" class="form-control form-control-sm"
+                        :title="t.accuracyTitle"
                         type="number" min="1" max="100" v-on:change="save">
                 </div>
             </fieldset>
@@ -305,12 +313,12 @@
                     <div class="modal-header">
                     </div>
                     <div class="modal-body">
-                        <p>Put the custom words here, separated by spaces/newlines.</p>
+                        <p>{{ t.customWordsPrompt }}</p>
                         <textarea id="custom-words-modal--text-area" rows="10" class="w-100">
                             </textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ t.cancel }}</button>
                         <button type="button" class="btn btn-primary" v-on:click="customWordsModalSubmit">OK</button>
                     </div>
                 </div>
@@ -322,17 +330,11 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        Release Note
+                        {{ t.releaseTitle }}
                     </div>
                     <div class="modal-body">
-                        <p>
-                            There are data schema changes to integrate the scoping of sources (i.e. the dynamic <b>Top 50</b>, <b>Top 100</b>, <b>Top 150</b>, or <b>Top 200</b>)
-                            for more flexible and comprehensive training.
-                        </p>
-                        <p>
-                            This means that your saved data will be reset, but you could easily replicate your previous settings.
-                            Likewise, the data reset makes the code simpler/leaner by removing the back-compatibility hacks.
-                        </p>
+                        <p>{{ t.releaseIntro }}</p>
+                        <p>{{ t.releaseReset }}</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
@@ -346,10 +348,10 @@
         <div class="px-4">
             <div class="lesson-index center">
                 <h4 v-show="data[data['source']].phrases.length">
-                    Lesson {{ data[data['source']].phrasesCurrentIndex + 1 }} / {{ data[data['source']].phrases.length }}
+                    {{ t.lesson }} {{ data[data['source']].phrasesCurrentIndex + 1 }} / {{ data[data['source']].phrases.length }}
                 </h4>
                 <h4 v-show="!data[data['source']].phrases.length">
-                    Click the "Custom" link to input words.
+                    {{ t.customWordsHint }}
                 </h4>
             </div>
             <div class="expected-phrase word text-white bg-primary mb-3">
@@ -363,7 +365,7 @@
                 <input v-model="typedPhrase"
                     :class="{'form-control': true, 'form-control-lg': true, 'incorrect-input': !isInputCorrect}"
                     id="input-typing" type="text" autocomplete="off" autocorrect="off" autocapitalize="none"
-                    placeholder="Re-type if failed, press <TAB> or <ESC> to reset" spellcheck="false"
+                    :placeholder="t.placeholder" spellcheck="false"
                     v-on:keyup="keyHandler"
                     v-on:keydown="preventSpace">
             </div>
@@ -372,9 +374,9 @@
 
         <!--Stats start-->
         <div class="center stats mt-auto">
-            <h4>WPM: {{ rawWPM }} </h4>
-            &nbsp; &nbsp; &nbsp; &nbsp; <h4>Accuracy: {{ accuracy }} % </h4>
-            &nbsp; &nbsp; &nbsp; &nbsp; <h4>Average WPM: {{ averageWPM }} </h4>
+            <h4 :title="t.wpmTitle">{{ t.statWpm }} {{ rawWPM }} </h4>
+            &nbsp; &nbsp; &nbsp; &nbsp; <h4 :title="t.accuracyTitle">{{ t.statAccuracy }} {{ accuracy }} % </h4>
+            &nbsp; &nbsp; &nbsp; &nbsp; <h4>{{ t.statAverageWpm }} {{ averageWPM }} </h4>
         </div>
         <!--Stats end-->
 
@@ -387,26 +389,26 @@
                 <a class="title" href="https://github.com/edmundlam/ngram-type-fr#features" target="_blank">
                     <i class="fa fa-question-circle"></i>
                     <div class="label">
-                        How to Use
+                        {{ t.howToUse }}
                     </div>
                 </a>
                 <a class="title" href="https://github.com/edmundlam/ngram-type-fr/issues/new" target="_blank">
                     <i class="fa fa-wrench"></i>
                     <div class="label">
-                        Suggest Improvements
+                        {{ t.suggestImprovements }}
                     </div>
                 </a>
                 <a class="title" href="https://ko-fi.com/ranelpadon" target="_blank">
                     <i class="fa fa-coffee"></i>
                     <div class="label">
-                        Buy the original creator of Ngram-Type a Coffee
+                        {{ t.buyCoffee }}
                     </div>
                 </a>
             </div>
             <div class="title-wrapper center powered-by mt-2">
                 <div class="label">
                     <a href="https://vuejs.org/" target="_blank">
-                        Powered By
+                        {{ t.poweredBy }}
                         <img src=./media/images/vuejs.png />
                     </a>
                 </div>
@@ -416,6 +418,7 @@
 
     </div>
 
+    <script src="./i18n.js"></script>
     <script src="./app.js"></script>
 </body>
 </html>

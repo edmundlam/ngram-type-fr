@@ -6,6 +6,10 @@ var ngramTypeConfig = {
             // and update the `data-reset-modal` message.
             VERSION: 2.0,
 
+            // UI language, persisted separately from `data` since `load()`
+            // replaces `data` wholesale from localStorage.
+            uiLang: detectUiLang(localStorage.ngramTypeUiLang, navigator.language),
+
             // Data source mappings.
             bigrams: bigrams,
             trigrams: trigrams,
@@ -84,6 +88,9 @@ var ngramTypeConfig = {
         }
     },
     computed: {
+        t: function() {
+            return I18N[this.uiLang];
+        },
         dataSource: function() {
             var dataSource = this.data['source'];
             return this.data[dataSource];
@@ -104,6 +111,8 @@ var ngramTypeConfig = {
         },
     },
     mounted: function() {
+        this.applyUiLang();
+
         // If there's already saved data.
         if (localStorage.ngramTypeAppdata != undefined) {
             var data = this.getSavedData();
@@ -199,6 +208,15 @@ var ngramTypeConfig = {
         },
     },
     methods: {
+        applyUiLang: function() {
+            localStorage.ngramTypeUiLang = this.uiLang;
+            document.documentElement.lang = this.uiLang;
+            document.title = this.t.pageTitle;
+        },
+        toggleUiLang: function() {
+            this.uiLang = (this.uiLang === 'en') ? 'fr' : 'en';
+            this.applyUiLang();
+        },
         save: function() {
             localStorage.ngramTypeAppdata = JSON.stringify(this.data);
         },
